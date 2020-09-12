@@ -2,3 +2,5 @@
 listview.inline { background: none; }
 
 popover.combo list, popover.combo listview { min-width: 200px; }
+
+tabview, tabbox { box-shadow: none; }
