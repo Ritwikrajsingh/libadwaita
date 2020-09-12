@@ -51,6 +51,7 @@ G_BEGIN_DECLS
 #include "adw-swipe-group.h"
 #include "adw-swipe-tracker.h"
 #include "adw-swipeable.h"
+#include "adw-tab-view.h"
 #include "adw-types.h"
 #include "adw-value-object.h"
 #include "adw-view-switcher.h"
