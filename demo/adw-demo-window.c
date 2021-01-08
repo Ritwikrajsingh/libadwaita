@@ -4,6 +4,7 @@
 
 #include "adw-demo-page-info.h"
 #include "pages/lists/adw-demo-page-lists.h"
+#include "pages/spring/adw-demo-page-spring.h"
 #include "pages/stub/adw-demo-page-stub.h"
 
 struct _AdwDemoWindow
@@ -65,6 +66,7 @@ adw_demo_window_init (AdwDemoWindow *self)
   g_type_ensure (ADW_TYPE_DEMO_PAGE_INFO);
   g_type_ensure (ADW_TYPE_DEMO_PAGE_LIST);
   g_type_ensure (ADW_TYPE_DEMO_PAGE_LISTS);
+  g_type_ensure (ADW_TYPE_DEMO_PAGE_SPRING);
   g_type_ensure (ADW_TYPE_DEMO_PAGE_STUB);
 
   gtk_widget_init_template (GTK_WIDGET (self));

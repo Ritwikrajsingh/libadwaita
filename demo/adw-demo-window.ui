@@ -268,6 +268,13 @@
     </child>
     <child>
       <object class="AdwDemoPageInfo">
+        <property name="icon-name">page-spring-symbolic</property>
+        <property name="title" translatable="yes">Spring Animations</property>
+        <property name="gtype">AdwDemoPageSpring</property>
+      </object>
+    </child>
+    <child>
+      <object class="AdwDemoPageInfo">
         <property name="icon-name">dialog-warning-symbolic</property>
         <property name="title" translatable="yes">Menus</property>
         <property name="gtype">AdwDemoPageStub</property>
