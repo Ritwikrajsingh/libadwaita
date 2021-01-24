@@ -130,7 +130,7 @@ adw_bin_buildable_add_child (GtkBuildable *buildable,
                              GObject      *child,
                              const char   *type)
 {
-  if (GTK_IS_WIDGET (child))
+  if (GTK_IS_WIDGET (child) && !GTK_IS_NATIVE (child))
     adw_bin_set_child (ADW_BIN (buildable), GTK_WIDGET (child));
   else
     parent_buildable_iface->add_child (buildable, builder, child, type);
