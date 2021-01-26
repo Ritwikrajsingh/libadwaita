@@ -130,6 +130,7 @@ src_sources = [
   'adw-enum-list-model.c',
   'adw-enum-value-object.c',
   'adw-expander-row.c',
+  'adw-fading-label.c',
   'adw-flap.c',
   'adw-focus.c',
   'adw-gizmo.c',
