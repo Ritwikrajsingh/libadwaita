@@ -1576,6 +1576,43 @@ set_orientation (AdwLeaflet     *self,
 }
 
 static void
+back_forward_button_pressed_cb (GtkGesture *gesture,
+                                int         n_press,
+                                double      x,
+                                double      y,
+                                AdwLeaflet *self)
+{
+  guint button;
+
+  if (n_press > 1) {
+    gtk_gesture_set_state (gesture, GTK_EVENT_SEQUENCE_DENIED);
+    return;
+  }
+
+  button = gtk_gesture_single_get_current_button (GTK_GESTURE_SINGLE (gesture));
+
+  /* Unfortunately, there are no constants for these buttons */
+
+  /* Back button */
+  if (button == 8 &&
+      can_swipe_in_direction (self, ADW_NAVIGATION_DIRECTION_BACK) &&
+      adw_leaflet_navigate (self, ADW_NAVIGATION_DIRECTION_BACK)) {
+    gtk_gesture_set_state (gesture, GTK_EVENT_SEQUENCE_CLAIMED);
+    return;
+  }
+
+  /* Forward button */
+  if (button == 9 &&
+      can_swipe_in_direction (self, ADW_NAVIGATION_DIRECTION_FORWARD) &&
+      adw_leaflet_navigate (self, ADW_NAVIGATION_DIRECTION_FORWARD)) {
+    gtk_gesture_set_state (gesture, GTK_EVENT_SEQUENCE_CLAIMED);
+    return;
+  }
+
+  gtk_gesture_set_state (gesture, GTK_EVENT_SEQUENCE_DENIED);
+}
+
+static void
 begin_swipe_cb (AdwSwipeTracker        *tracker,
                 AdwNavigationDirection  direction,
                 gboolean                direct,
@@ -2459,6 +2496,7 @@ static void
 adw_leaflet_init (AdwLeaflet *self)
 {
   GtkWidget *widget = GTK_WIDGET (self);
+  GtkEventController *controller;
 
   gtk_widget_set_overflow (GTK_WIDGET (self), GTK_OVERFLOW_HIDDEN);
 
@@ -2476,6 +2514,11 @@ adw_leaflet_init (AdwLeaflet *self)
   self->mode_transition.current_pos = 1.0;
   self->mode_transition.target_pos = 1.0;
   self->can_unfold = TRUE;
+
+  controller = GTK_EVENT_CONTROLLER (gtk_gesture_click_new ());
+  gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (controller), 0);
+  g_signal_connect_object (controller, "pressed", G_CALLBACK (back_forward_button_pressed_cb), self, 0);
+  gtk_widget_add_controller (widget, controller);
 
   self->tracker = adw_swipe_tracker_new (ADW_SWIPEABLE (self));
 
