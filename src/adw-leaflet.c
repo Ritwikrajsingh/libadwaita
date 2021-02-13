@@ -2288,6 +2288,20 @@ adw_leaflet_finalize (GObject *object)
   G_OBJECT_CLASS (adw_leaflet_parent_class)->finalize (object);
 }
 
+static gboolean
+back_forward_shortcut_cb (GtkWidget *widget,
+                          GVariant  *args,
+                          gpointer   user_data)
+{
+  AdwLeaflet *self = ADW_LEAFLET (widget);
+  AdwNavigationDirection direction;
+
+  g_variant_get (args, "h", &direction);
+
+  return can_swipe_in_direction (self, direction) &&
+         adw_leaflet_navigate (self, direction);
+}
+
 static void
 adw_leaflet_class_init (AdwLeafletClass *klass)
 {
@@ -2489,6 +2503,13 @@ adw_leaflet_class_init (AdwLeafletClass *klass)
   g_object_class_install_properties (object_class, LAST_PROP, props);
 
   gtk_widget_class_set_css_name (widget_class, "leaflet");
+
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Back, 0,
+                                back_forward_shortcut_cb, "h",
+                                ADW_NAVIGATION_DIRECTION_BACK);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Forward, 0,
+                                back_forward_shortcut_cb, "h",
+                                ADW_NAVIGATION_DIRECTION_FORWARD);
 }
 
 
