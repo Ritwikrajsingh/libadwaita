@@ -196,14 +196,6 @@ list.content > row.expander:checked:not(:first-child), list.content > row.expand
 
 button.list-button:not(:active):not(:checked):not(:hover) { background: none; border: 1px solid alpha(#cdc7c2, 0.5); box-shadow: none; }
 
-window.csd.unified:not(.solid-csd):not(.fullscreen) headerbar { box-shadow: inset 0 1px rgba(255, 255, 255, 0.7); }
-
-window.csd.unified:not(.solid-csd):not(.fullscreen) headerbar.selection-mode { box-shadow: none; }
-
-window.csd.unified:not(.solid-csd):not(.fullscreen) > contents > outline { box-shadow: inset 0 1px rgba(255, 255, 255, 0.34); }
-
-window.csd.unified:not(.solid-csd):not(.fullscreen):not(.tiled):not(.tiled-top):not(.tiled-bottom):not(.tiled-left):not(.tiled-right):not(.maximized), window.csd.unified:not(.solid-csd):not(.fullscreen):not(.tiled):not(.tiled-top):not(.tiled-bottom):not(.tiled-left):not(.tiled-right):not(.maximized) > contents > outline { border-radius: 8px; }
-
 statuspage > scrolledwindow > viewport > box > clamp > box > .icon { color: rgba(46, 52, 54, 0.5); }
 
 statuspage > scrolledwindow > viewport > box > clamp > box > .icon:backdrop { color: rgba(146, 149, 149, 0.5); }
