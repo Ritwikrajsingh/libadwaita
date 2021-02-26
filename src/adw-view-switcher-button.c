@@ -8,6 +8,7 @@
 #include "config.h"
 #include <glib/gi18n-lib.h>
 
+#include "adw-indicator-bin-private.h"
 #include "adw-view-switcher-button-private.h"
 
 /**
@@ -56,6 +57,7 @@ struct _AdwViewSwitcherButton
   char *icon_name;
   char *label;
   GtkOrientation orientation;
+  gboolean needs_attention;
 
   guint switch_timer;
 };
@@ -130,6 +132,14 @@ set_orientation (AdwViewSwitcherButton *self,
                                GTK_WIDGET (self->orientation == GTK_ORIENTATION_VERTICAL ?
                                              self->vertical_box :
                                              self->horizontal_box));
+}
+
+static bool
+should_show_indicator (AdwViewSwitcherButton *self,
+                       gboolean               needs_attention,
+                       gboolean               active)
+{
+  return needs_attention && !active;
 }
 
 static void
@@ -282,6 +292,7 @@ adw_view_switcher_button_class_init (AdwViewSwitcherButtonClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, active_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, drag_enter_cb);
   gtk_widget_class_bind_template_callback (widget_class, drag_leave_cb);
+  gtk_widget_class_bind_template_callback (widget_class, should_show_indicator);
 
   gtk_widget_class_set_accessible_role (widget_class, GTK_ACCESSIBLE_ROLE_TAB);
 }
@@ -290,6 +301,8 @@ static void
 adw_view_switcher_button_init (AdwViewSwitcherButton *self)
 {
   self->icon_name = g_strdup ("image-missing");
+
+  g_type_ensure (ADW_TYPE_INDICATOR_BIN);
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
@@ -381,7 +394,7 @@ adw_view_switcher_button_get_needs_attention (AdwViewSwitcherButton *self)
 {
   g_return_val_if_fail (ADW_IS_VIEW_SWITCHER_BUTTON (self), FALSE);
 
-  return gtk_widget_has_css_class (GTK_WIDGET (self), "needs-attention");
+  return self->needs_attention;
 }
 
 /**
@@ -401,13 +414,10 @@ adw_view_switcher_button_set_needs_attention (AdwViewSwitcherButton *self,
 
   needs_attention = !!needs_attention;
 
-  if (gtk_widget_has_css_class (GTK_WIDGET (self), "needs-attention") == needs_attention)
+  if (self->needs_attention == needs_attention)
     return;
 
-  if (needs_attention)
-    gtk_widget_add_css_class (GTK_WIDGET (self), "needs-attention");
-  else
-    gtk_widget_remove_css_class (GTK_WIDGET (self), "needs-attention");
+  self->needs_attention = needs_attention;
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_NEEDS_ATTENTION]);
 }
