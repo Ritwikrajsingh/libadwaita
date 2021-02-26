@@ -180,7 +180,6 @@ struct _AdwLeaflet {
     gboolean can_swipe_forward;
 
     GtkPanDirection active_direction;
-    gboolean is_direct_swipe;
     int swipe_direction;
   } child_transition;
 
@@ -1557,10 +1556,8 @@ set_orientation (AdwLeaflet     *self,
 static void
 begin_swipe_cb (AdwSwipeTracker        *tracker,
                 AdwNavigationDirection  direction,
-                gboolean                direct,
                 AdwLeaflet             *self)
 {
-  self->child_transition.is_direct_swipe = direct;
   self->child_transition.swipe_direction = direction;
 
   if (self->child_transition.tick_id > 0) {
@@ -1572,7 +1569,7 @@ begin_swipe_cb (AdwSwipeTracker        *tracker,
   } else {
     AdwLeafletPage *page = NULL;
 
-    if ((can_swipe_in_direction (self, direction) || !direct) && self->folded)
+    if (can_swipe_in_direction (self, direction) && self->folded)
       page = find_swipeable_page (self, direction);
 
     if (page) {
@@ -2527,8 +2524,7 @@ adw_leaflet_get_snap_points (AdwSwipeable *swipeable,
   } else {
     AdwLeafletPage *page = NULL;
 
-    if ((can_swipe_in_direction (self, self->child_transition.swipe_direction) ||
-         !self->child_transition.is_direct_swipe) && self->folded)
+    if (can_swipe_in_direction (self, self->child_transition.swipe_direction) && self->folded)
       page = find_swipeable_page (self, self->child_transition.swipe_direction);
 
     lower = MIN (0, page ? self->child_transition.swipe_direction : 0);
