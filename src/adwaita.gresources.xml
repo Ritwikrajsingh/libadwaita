@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/org/gnome/Adwaita">
+    <file>glsl/mask.glsl</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/adw-expander-arrow-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/object-select-symbolic.svg</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/pan-down-symbolic.svg</file>

@@ -196,6 +196,20 @@ viewswitcherbar actionbar > revealer > box {
   padding: 0;
 }
 
+// AdwIndicatorBin
+
+indicator-bin {
+  indicator { margin: 1px; }
+  mask { padding: 1px; }
+
+  indicator, mask {
+    background: #3584e4;
+    min-width: 6px;
+    min-height: 6px;
+    border-radius: 100%;
+  }
+}
+
 // Content list
 
 list.content,

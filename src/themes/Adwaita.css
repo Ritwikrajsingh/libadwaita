@@ -172,6 +172,12 @@ viewswitcher button.needs-attention > stack > box label:dir(rtl) { background-po
 
 viewswitcherbar actionbar > revealer > box { padding: 0; }
 
+indicator-bin indicator { margin: 1px; }
+
+indicator-bin mask { padding: 1px; }
+
+indicator-bin indicator, indicator-bin mask { background: #3584e4; min-width: 6px; min-height: 6px; border-radius: 100%; }
+
 list.content, list.content list, listview.content, listview.content list { background-color: transparent; }
 
 list.content list.nested > row:not(:active):not(:hover):not(:selected), list.content list.nested > row:not(:active):hover:not(.activatable):not(:selected), listview.content list.nested > row:not(:active):not(:hover):not(:selected), listview.content list.nested > row:not(:active):hover:not(.activatable):not(:selected) { background-color: mix(#f6f5f4, #ffffff, 0.5); }
